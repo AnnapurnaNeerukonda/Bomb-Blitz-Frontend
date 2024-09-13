@@ -40,6 +40,7 @@ const Game = () => {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [pastScores, setPastScores] = useState([]);
+  
   const [gameOver, setGameOver] = useState(false);
   const [message, setMessage] = useState('');
   const [showConfetti, setShowConfetti] = useState(false);
@@ -96,6 +97,8 @@ const Game = () => {
         { score },
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );
+      localStorage.setItem('pastScores', JSON.stringify(response.data.pastScores));
+      console.log(pastScores)
       setPastScores(response.data.pastScores || []);
     } catch (error) {
       console.error('Error updating past scores:', error);
@@ -163,15 +166,14 @@ const Game = () => {
           New Game
         </button>
 
-        <div className="w-full max-w-lg mb-8">
+        {/* <div className="w-full max-w-lg mb-8">
           <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Past Scores:</h3>
           <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
             {pastScores.map((score, index) => (
               <li key={index}>{score}</li>
             ))}
           </ul>
-        </div>
-
+        </div> */}
         {message && <p className="text-xl font-semibold mt-4">{message}</p>}
       </div>
     </>
